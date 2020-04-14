@@ -5,6 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/movie.db" beforeDir="false" afterPath="$PROJECT_DIR$/movie.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/movie/search_index.py" beforeDir="false" afterPath="$PROJECT_DIR$/movie/search_index.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movie/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/movie/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movie/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/movie/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -86,7 +89,7 @@
       <workItem from="1586530543627" duration="13314000" />
       <workItem from="1586739622131" duration="5485000" />
       <workItem from="1586808472574" duration="645000" />
-      <workItem from="1586829268038" duration="5470000" />
+      <workItem from="1586829268038" duration="6726000" />
     </task>
     <servers />
   </component>

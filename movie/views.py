@@ -181,33 +181,33 @@ def whole_list(request, model, page):
     return render(request, '{}_list.html'.format(model.get_name()), data)
 
 
-def search(request, item, query_string, page):
-    if item is None or query_string is None or page is None:
-        return render(request, '404.html')
-    query_string = query_string.replace("%20", " ")
-    if item == 'movie':
-        result = [search_index.data_in_memory['movie_dict'][movie_id] for movie_id in
-                  search_index.search_movie(query_string)]
-    elif item == 'actor':
-        result = [search_index.data_in_memory['actor_dict'][actor_id] for actor_id in
-                  search_index.search_actor(query_string)]
-    else:
-        return render(request, '404.html')
-    page = int(page)
-    total_page = int(math.ceil(len(result) / 10))
-    if page > total_page and total_page != 0:
-        return render(request, '404.html')
-    last_item_index = 10 * page if page != total_page else len(result)
-    pages = []
-    end_distance = total_page - page
-    start_page_num = page - 5 if end_distance >= 5 else page - 10 + end_distance
-    end_page_num = page + 5 if page > 5 else 10
-    for i in range(start_page_num, end_page_num + 1):
-        if 1 <= i <= total_page:
-            pages.append(i)
-    return render(request, item + '_search.html',
-                  {'items': result[10 * (page - 1):last_item_index], 'length': len(result),
-                   'query_string': query_string, 'current_page': page, 'page_number': total_page, 'pages': pages})
+# def search(request, item, query_string, page):
+#     if item is None or query_string is None or page is None:
+#         return render(request, '404.html')
+#     query_string = query_string.replace("%20", " ")
+#     if item == 'movie':
+#         result = [search_index.data_in_memory['movie_dict'][movie_id] for movie_id in
+#                   search_index.search_movie(query_string)]
+#     elif item == 'actor':
+#         result = [search_index.data_in_memory['actor_dict'][actor_id] for actor_id in
+#                   search_index.search_actor(query_string)]
+#     else:
+#         return render(request, '404.html')
+#     page = int(page)
+#     total_page = int(math.ceil(len(result) / 10))
+#     if page > total_page and total_page != 0:
+#         return render(request, '404.html')
+#     last_item_index = 10 * page if page != total_page else len(result)
+#     pages = []
+#     end_distance = total_page - page
+#     start_page_num = page - 5 if end_distance >= 5 else page - 10 + end_distance
+#     end_page_num = page + 5 if page > 5 else 10
+#     for i in range(start_page_num, end_page_num + 1):
+#         if 1 <= i <= total_page:
+#             pages.append(i)
+#     return render(request, item + '_search.html',
+#                   {'items': result[10 * (page - 1):last_item_index], 'length': len(result),
+#                    'query_string': query_string, 'current_page': page, 'page_number': total_page, 'pages': pages})
 
 
 def search_suggest(request, query_string):
