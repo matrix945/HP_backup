@@ -47,7 +47,7 @@ def add_one(request, movie_id):
 
 
 def add_two(request, movie_id):
-    print("Add two mark to this movie : "+ str(movie_id))
+    print("Add two mark to this movie : " + str(movie_id))
     rates = Rating.objects.filter(movieid_id=movie_id, username=request.user.get_username())
     timestp = int(time.time())
     if len(rates) == 0:
@@ -61,7 +61,7 @@ def add_two(request, movie_id):
 
 
 def add_three(request, movie_id):
-    print("Add three mark to this movie : "+ str(movie_id))
+    print("Add three mark to this movie : " + str(movie_id))
     rates = Rating.objects.filter(movieid_id=movie_id, username=request.user.get_username())
     timestp = int(time.time())
     if len(rates) == 0:
@@ -274,7 +274,7 @@ def a_recommend(request, movie_id):
 
     if not recomm:
         print("recommend" + " is ")
-        
+
         print("user didn't pass pre alg test")
         return render(request, 'recommend.html', {'recommend_flag': False})
 
@@ -283,7 +283,7 @@ def a_recommend(request, movie_id):
     print("recommend movie id is ")
     print(a)
     movies.append(a)
-    return render(request, 'recommend.html', {'items': movies, 'number': len(movies) , 'recommend_flag': True})
+    return render(request, 'recommend.html', {'items': movies, 'number': len(movies), 'recommend_flag': True})
 
 
 def load_data():
@@ -320,6 +320,8 @@ return the common movies amount of all users
 [1, 0, 0, 0, 0, 1, 0, 2, 1 ........]
  
 '''
+
+
 def pre_common_test(movieSet, tester):
     common = []
     if len(tester) < self_threshold:
@@ -350,6 +352,8 @@ calculate the rank matrix. No common movies -> -1
 return [172.0, -1, -1, -1, -1, 148.0, -1, 317.0, 212.0, 1019.0, -1 ........]
 
 '''
+
+
 def cal_matrix(common, movies, tester):
     moviesCopy = dict(movies)
     iCounter = 0
@@ -376,6 +380,8 @@ movie: (userid , dict_rate{}) single node
 tester: {'573': 3.0, '589': 4.0}
 
 '''
+
+
 def cal_rank(movies, tester):
     rank = 0
     for k in tester:
@@ -399,7 +405,7 @@ def core_running(username):
     for record in records:
         tester.update({record.movieid_id: record.rate})
 
-    print("tester user data is " )
+    print("tester user data is ")
     print(tester)
 
     com = pre_common_test(user_movie, tester)  # [1, 0, 0, 0, 0, 1, 0, 2, 1 ........]
@@ -433,7 +439,7 @@ def core_running(username):
 
     # remove_depu_list = dict(user_movie[str(tempIndexMax+1)])
 
-    remove_depu_list = {k: v for k, v in user_movie[str(tempIndexMax+1)].items() if k not in tester}
+    remove_depu_list = {k: v for k, v in user_movie[str(tempIndexMax + 1)].items() if k not in tester}
 
     aaa = {k: v for k, v in sorted(remove_depu_list.items(), key=lambda item: item[1])}
 
@@ -441,7 +447,6 @@ def core_running(username):
     print(aaa)
     print("\n")
 
-    recommend_movie =aaa.popitem()
+    recommend_movie = aaa.popitem()
 
     return recommend_movie
-
