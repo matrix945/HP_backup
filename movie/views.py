@@ -15,8 +15,6 @@ debug = True
 
 
 def add_seen(request, movie_id):
-    print("dsadddddddddddddddddd")
-    print(request)
     if request.is_ajax():
         history = Seen.objects.filter(movieid_id=movie_id, username=request.user.get_username())
         if len(history) == 0:
@@ -34,80 +32,74 @@ def add_seen(request, movie_id):
 
 
 def add_one(request, movie_id):
-    print("twoooooooooooooooo")
-    print(request)
+    if debug:
+        print("Add one mark to this movie : " + str(movie_id))
     rates = Rating.objects.filter(movieid_id=movie_id, username=request.user.get_username())
-    print(rates)
+    if debug:print(rates)
     timestp = int(time.time())
     if len(rates) == 0:
-        print("this movie and user have not linked yet")
+        if debug: print("this movie and user have not linked yet")
         new_record = Rating(username=request.user.get_username(), rate=2, movieid_id=movie_id, timestamp=timestp)
         new_record.save()
-        print("da????")
+        if debug: print("succeed")
     else:
-        print("linkedddddddddddddddd yet")
+        if debug: print("u marked before")
     return HttpResponse('1')
 
 
 def add_two(request, movie_id):
-    print("twoooooooooooooooo")
-    print(request)
+    if debug: print("Add two mark to this movie : " + str(movie_id))
     rates = Rating.objects.filter(movieid_id=movie_id, username=request.user.get_username())
-    print(rates)
     timestp = int(time.time())
     if len(rates) == 0:
-        print("this movie and user have not linked yet")
+        if debug: print("this movie and user have not linked yet")
         new_record = Rating(username=request.user.get_username(), rate=2, movieid_id=movie_id, timestamp=timestp)
         new_record.save()
-        print("da????")
+        if debug: print("succeed")
     else:
-        print("linkedddddddddddddddd yet")
+        if debug: print("u marked before")
     return HttpResponse('1')
 
 
 def add_three(request, movie_id):
-    print("threeeeeeeeeeeeeeeee")
-    print(request)
+    if debug: print("Add three mark to this movie : " + str(movie_id))
     rates = Rating.objects.filter(movieid_id=movie_id, username=request.user.get_username())
-    print(rates)
     timestp = int(time.time())
     if len(rates) == 0:
-        print("this movie and user have not linked yet")
+        if debug: print("this movie and user have not linked yet")
         new_record = Rating(username=request.user.get_username(), rate=3, movieid_id=movie_id, timestamp=timestp)
         new_record.save()
-        print("da????")
+        if debug: print("succeed")
     else:
-        print("linkedddddddddddddddd yet")
+        if debug: print("u marked before")
     return HttpResponse('1')
 
 
 def add_four(request, movie_id):
-    print("fourrrrrrrrrrrrrrrr")
-    print(request)
+    if debug: print("Add four mark to this movie : " + str(movie_id))
     rates = Rating.objects.filter(movieid_id=movie_id, username=request.user.get_username())
     timestp = int(time.time())
     if len(rates) == 0:
-        print("this movie and user have not linked yet")
+        if debug: print("this movie and user have not linked yet")
         new_record = Rating(username=request.user.get_username(), rate=4, movieid_id=movie_id, timestamp=timestp)
         new_record.save()
-        print("save successfully")
+        if debug: print("save successfully")
     else:
-        print("linkedddddddddddddddd yet")
+        if debug: print("u marked before")
     return HttpResponse('1')
 
 
 def add_five(request, movie_id):
-    print("fiveeeeeeeeeeeeeeee")
-    print(request)
+    if debug: print("Add five mark to this movie : " + str(movie_id))
     rates = Rating.objects.filter(movieid_id=movie_id, username=request.user.get_username())
     timestp = int(time.time())
     if len(rates) == 0:
-        print("this movie and user have not linked yet")
+        if debug: print("this movie and user have not linked yet")
         new_record = Rating(username=request.user.get_username(), rate=5, movieid_id=movie_id, timestamp=timestp)
         new_record.save()
-        print("save successfully")
+        if debug: print("save successfully")
     else:
-        print("linkedddddddddddddddd yet")
+        if debug: print("u marked before")
     return HttpResponse('1')
 
 
@@ -242,13 +234,8 @@ def search_suggest(request, query_string):
 
 @csrf_protect
 def seen(request, movie_id):
-    print("working here")
-
-    print(request)
-    print(movie_id)  # empty
-
-    print(request.user.get_username())
-
+    if debug: print(movie_id)  # empty
+    if debug: print(request.user.get_username())
     if request.POST:
         try:
             d = Rating.objects.get(username=request.user.get_username(), movieid_id=movie_id)
@@ -257,12 +244,9 @@ def seen(request, movie_id):
             return render(request, '404.html')
     records = Rating.objects.filter(username=request.user.get_username())
     movies = []
-    print(records)
     for record in records:
-        print(record)
-        print(record.movieid)
-        print(record.movieid_id)
-        # movie_id = str(record.movieid_id).split('|')[1]
+        if debug: print(record)
+        if debug: print(record.movieid_id)
         movies.append(Movie.objects.get(movieid=record.movieid_id))
     # TODO     made change hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeee except seen
     return render(request, 'Seen.html', {'items': movies, 'number': len(movies)})
@@ -284,22 +268,23 @@ def expect(request, movie_id):
 
 
 def a_recommend(request, movie_id):
-    print("recommend")
+    if debug: print("recommend function init")
     username = request.user.get_username()
-    print(type(username))
-    print(username)
+    if debug: print("run recommend for this user: " + username)
     recomm = core_running(username)
 
-    print(recomm)
-
     if not recomm:
+        if debug: print("recommend" + " is ")
+        if debug: print(recomm)
+        if debug: print("user didn't pass pre alg test")
         return render(request, 'recommend.html', {'recommend_flag': False})
 
     movies = []
     a = Movie.objects.get(movieid=recomm[0])
-    print(a)
+    if debug: print("recommend movie id is ")
+    if debug: print(a)
     movies.append(a)
-    return render(request, 'recommend.html', {'items': movies, 'number': len(movies) , 'recommend_flag': True})
+    return render(request, 'recommend.html', {'items': movies, 'number': len(movies), 'recommend_flag': True})
 
 
 def load_data():
@@ -318,7 +303,6 @@ def load_data():
     #     movies[movieId] = movieTitle
     with codecs.open(filename_movie_info, 'r', encoding='utf8') as f:
         text = f.readlines()
-
     # for line in open(filename_movieInfo):
 
     for line in text:
@@ -337,8 +321,6 @@ return the common movies amount of all users
 [1, 0, 0, 0, 0, 1, 0, 2, 1 ........]
  
 '''
-
-
 def pre_common_test(movieSet, tester):
     common = []
     if len(tester) < self_threshold:
@@ -353,8 +335,8 @@ def pre_common_test(movieSet, tester):
             common.append(counter)
             counter = 0
 
-        print("common is")
-        print(common)
+        if debug: print("common is")
+        if debug: print(common)
 
         if max(common) < common_threshold:
             return False
@@ -369,8 +351,6 @@ calculate the rank matrix. No common movies -> -1
 return [172.0, -1, -1, -1, -1, 148.0, -1, 317.0, 212.0, 1019.0, -1 ........]
 
 '''
-
-
 def cal_matrix(common, movies, tester):
     moviesCopy = dict(movies)
     iCounter = 0
@@ -382,18 +362,11 @@ def cal_matrix(common, movies, tester):
             matrix.append(-1)
         else:
             rank = cal_rank(moviesCopy[i], tester)
-
-            if(rank == 26):
-                print("whatttttttttttttttttttttttttttttttt")
-                print(i)
-                print(moviesCopy[i])
-
-
             matrix.append(rank)
         iCounter = iCounter + 1
 
-    print("matrix is ")
-    print(matrix)
+    if debug: print("matrix is ")
+    if debug: print(matrix)
     return matrix
 
 
@@ -404,28 +377,16 @@ movie: (userid , dict_rate{}) single node
 tester: {'573': 3.0, '589': 4.0}
 
 '''
-
-
 def cal_rank(movies, tester):
     rank = 0
-    # for i in movies:
     for k in tester:
         if k in movies:
             tempCounter = (tester[k] - movies[k]) * (tester[k] - movies[k])
             rank = rank + tempCounter
-
-    # if (rank == 26):
-    #     for i in movies:
-    #         for k in tester:
-    #             if k in i:
-    #                 print("k is ssssssssss" )
-    #                 print(k)
-
     return rank
 
 
 def core_running(username):
-    print("core is running")
     user_movie, movies = load_data()
     # ('6040', {'573': 4.0, '589': 4.0, '1': 3.0, '2068': 4.0, '592': 2.0, '593': 5.0, '3016': 2.0, '3017': 1.0,
     # '2070': 4.0, '1419': 3.0, '2076': 5.0, '3039': 2.0, '903': 4.0, '904': 4.0, '908': 4.0, '910': 4.0, '912': 5.0,
@@ -437,15 +398,12 @@ def core_running(username):
     tester = {}
     # tester = {'573': 3.0, '589': 4.0, '34': 3.0, '344': 3.0, '24': 3.0, '178': 3.0}
     for record in records:
-        print(record.movieid_id)
-        print(record.rate)
         tester.update({record.movieid_id: record.rate})
 
-    print(tester)
+    if debug: print("tester user data is ")
+    if debug: print(tester)
 
     com = pre_common_test(user_movie, tester)  # [1, 0, 0, 0, 0, 1, 0, 2, 1 ........]
-
-    print("pre commmmmmmmmon testttttttttt")
 
     if not com:
         return False
@@ -455,8 +413,8 @@ def core_running(username):
     sorted(s)
     s.remove(-1)
     mini = min(s)  # mini is the most likely guy in userCF
-    print("mini is " + str(mini))
-    print(len(result) == len(com))  # com and result should be matched with each other
+    if debug: print("mini is " + str(mini))
+    if debug: print(len(result) == len(com))  # com and result should be matched with each other
 
     # findMaxCommon = []
     tempMax = -1
@@ -472,21 +430,19 @@ def core_running(username):
                 tempIndexMax = i
             # findMaxCommon.append(com[i])
 
-    print("the best index is at the postition : " + str(tempIndexMax) + " with common number of :" + str(tempMax))
+    if debug: print(
+        "the best index is at the postition : " + str(tempIndexMax) + " with common number of :" + str(tempMax))
 
-    print(result[tempIndexMax])
+    # remove_depu_list = dict(user_movie[str(tempIndexMax+1)])
 
-    print(user_movie[str(tempIndexMax+1)])
-
-
-
-    remove_depu_list = dict(user_movie[str(tempIndexMax+1)])
-
-    remove_depu_list = {k: v for k, v in user_movie[str(tempIndexMax+1)].items() if k not in tester}
+    remove_depu_list = {k: v for k, v in user_movie[str(tempIndexMax + 1)].items() if k not in tester}
 
     aaa = {k: v for k, v in sorted(remove_depu_list.items(), key=lambda item: item[1])}
 
-    recommend_movie =aaa.popitem()
+    if debug: print("recommend list contains ")
+    if debug: print(aaa)
+    if debug: print("\n")
+
+    recommend_movie = aaa.popitem()
 
     return recommend_movie
-

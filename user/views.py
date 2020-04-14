@@ -16,7 +16,6 @@ def user_login(request):
         user = authenticate(username=username, password=password)
         if user is not None and user.is_active:
             print("User Login:  Username:" + username + '    Password:' + password)
-            print(request.POST)
             login(request, user)
             return redirect(request.POST.get('path'))
         else:
