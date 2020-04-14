@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block mainbody %}
+    <div id="container">
+
+        {% if recommend_flag %}
+            <h2>{{ number }} movie(s) in your Recommend List:</h2>
+            {% for item in items %}
+                <h2><a href="/movie/movie_detail/{{ item.movieid }}" target="_self">{{ item.title }}</a></h2>
+
+                <form role="form" action="/movie/expect/{{ item.movieid }}" method="post">
+                    {% csrf_token %}
+    {#                <input type="submit" value="Delete">#}
+                </form>
+
+                <img border="0" src="{{ item.poster }}" alt="Cannot load photo, sorry!" width="200" height="320">
+                <hr>
+            {% endfor %}
+        {% else %}
+
+            <h2>Do not have enough data to run the alg</h2>
+
+        {% endif %}
+
+    </div>
+
+
+{% endblock %}
