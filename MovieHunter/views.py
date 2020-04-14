@@ -12,7 +12,7 @@ def index(request):
     # movie_dict = search_index.data_in_memory['movie_dict']
     if request.user.is_authenticated:
         data = {'username': request.user.get_username()}
-    popular_movies = Popularity.objects.all().order_by('-weight')
+    # popular_movies = Popularity.objects.all().order_by('-weight')
     popular = []
     # for movie in popular_movies[:5]:
     #     try:

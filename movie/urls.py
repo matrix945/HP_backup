@@ -10,7 +10,7 @@ urlpatterns = [
     # url(r'^search/(?P<item>.*)/(?P<query_string>.*)/(?P<page>\d*).*', views.search, name='search'),
     url(r'^seen/(?P<movie_id>.*)', views.seen, name='seen'),
 
-    url(r'^add_seen/(?P<movie_id>.*)', views.add_seen, name='seen'),
+    # url(r'^add_seen/(?P<movie_id>.*)', views.add_seen, name='seen'),
 
     url(r'^add_one/(?P<movie_id>.*)', views.add_two, name='seen'),
     url(r'^add_two/(?P<movie_id>.*)', views.add_two, name='seen'),
@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^recommend/(?P<movie_id>.*)', views.a_recommend, name='seen'),
 
 
-    url(r'^expect/(?P<movie_id>.*)', views.expect, name='expect'),
-    url(r'^add_expect/(?P<movie_id>.*)', views.add_expect, name='expect'),
-    url(r'^search_suggest/(?P<query_string>.*)', views.search_suggest, name='search_suggest'),
+    # url(r'^expect/(?P<movie_id>.*)', views.expect, name='expect'),
+    # url(r'^add_expect/(?P<movie_id>.*)', views.add_expect, name='expect'),
+    # url(r'^search_suggest/(?P<query_string>.*)', views.search_suggest, name='search_suggest'),
 ]
