@@ -42,15 +42,15 @@ def user_register(request):
         return render(request, "register.html", {'form': UserCreationForm()})
 
 
-def facebook(request):
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    user = authenticate(username=username, password=password)
-    if user is not None and user.is_active:
-        login(request, user)
-    else:
-        user = User.objects.create_user(username=username, password='facebook')
-        user.save()
-        user = authenticate(username=username, password='facebook')
-        login(request, user)
-    return HttpResponse()
+# def facebook(request):
+#     username = request.POST.get('username')
+#     password = request.POST.get('password')
+#     user = authenticate(username=username, password=password)
+#     if user is not None and user.is_active:
+#         login(request, user)
+#     else:
+#         user = User.objects.create_user(username=username, password='facebook')
+#         user.save()
+#         user = authenticate(username=username, password='facebook')
+#         login(request, user)
+#     return HttpResponse()
