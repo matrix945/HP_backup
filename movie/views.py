@@ -32,74 +32,73 @@ def add_seen(request, movie_id):
 
 
 def add_one(request, movie_id):
-    if debug:
-        print("Add one mark to this movie : " + str(movie_id))
+    print("Add one mark to this movie : " + str(movie_id))
     rates = Rating.objects.filter(movieid_id=movie_id, username=request.user.get_username())
-    if debug:print(rates)
+    print(rates)
     timestp = int(time.time())
     if len(rates) == 0:
-        if debug: print("this movie and user have not linked yet")
+        print("this movie and user have not linked yet")
         new_record = Rating(username=request.user.get_username(), rate=2, movieid_id=movie_id, timestamp=timestp)
         new_record.save()
-        if debug: print("succeed")
+        print("succeed")
     else:
-        if debug: print("u marked before")
+        print("u marked before")
     return HttpResponse('1')
 
 
 def add_two(request, movie_id):
-    if debug: print("Add two mark to this movie : " + str(movie_id))
+    print("Add two mark to this movie : "+ str(movie_id))
     rates = Rating.objects.filter(movieid_id=movie_id, username=request.user.get_username())
     timestp = int(time.time())
     if len(rates) == 0:
-        if debug: print("this movie and user have not linked yet")
+        print("this movie and user have not linked yet")
         new_record = Rating(username=request.user.get_username(), rate=2, movieid_id=movie_id, timestamp=timestp)
         new_record.save()
-        if debug: print("succeed")
+        print("succeed")
     else:
-        if debug: print("u marked before")
+        print("u marked before")
     return HttpResponse('1')
 
 
 def add_three(request, movie_id):
-    if debug: print("Add three mark to this movie : " + str(movie_id))
+    print("Add three mark to this movie : "+ str(movie_id))
     rates = Rating.objects.filter(movieid_id=movie_id, username=request.user.get_username())
     timestp = int(time.time())
     if len(rates) == 0:
-        if debug: print("this movie and user have not linked yet")
+        print("this movie and user have not linked yet")
         new_record = Rating(username=request.user.get_username(), rate=3, movieid_id=movie_id, timestamp=timestp)
         new_record.save()
-        if debug: print("succeed")
+        print("succeed")
     else:
-        if debug: print("u marked before")
+        print("u marked before")
     return HttpResponse('1')
 
 
 def add_four(request, movie_id):
-    if debug: print("Add four mark to this movie : " + str(movie_id))
+    print("Add four mark to this movie : " + str(movie_id))
     rates = Rating.objects.filter(movieid_id=movie_id, username=request.user.get_username())
     timestp = int(time.time())
     if len(rates) == 0:
-        if debug: print("this movie and user have not linked yet")
+        print("this movie and user have not linked yet")
         new_record = Rating(username=request.user.get_username(), rate=4, movieid_id=movie_id, timestamp=timestp)
         new_record.save()
-        if debug: print("save successfully")
+        print("save successfully")
     else:
-        if debug: print("u marked before")
+        print("u marked before")
     return HttpResponse('1')
 
 
 def add_five(request, movie_id):
-    if debug: print("Add five mark to this movie : " + str(movie_id))
+    print("Add five mark to this movie : " + str(movie_id))
     rates = Rating.objects.filter(movieid_id=movie_id, username=request.user.get_username())
     timestp = int(time.time())
     if len(rates) == 0:
-        if debug: print("this movie and user have not linked yet")
+        print("this movie and user have not linked yet")
         new_record = Rating(username=request.user.get_username(), rate=5, movieid_id=movie_id, timestamp=timestp)
         new_record.save()
-        if debug: print("save successfully")
+        print("save successfully")
     else:
-        if debug: print("u marked before")
+        print("u marked before")
     return HttpResponse('1')
 
 
@@ -234,8 +233,8 @@ def search_suggest(request, query_string):
 
 @csrf_protect
 def seen(request, movie_id):
-    if debug: print(movie_id)  # empty
-    if debug: print(request.user.get_username())
+    print(movie_id)  # empty
+    print(request.user.get_username())
     if request.POST:
         try:
             d = Rating.objects.get(username=request.user.get_username(), movieid_id=movie_id)
@@ -245,8 +244,8 @@ def seen(request, movie_id):
     records = Rating.objects.filter(username=request.user.get_username())
     movies = []
     for record in records:
-        if debug: print(record)
-        if debug: print(record.movieid_id)
+        print(record)
+        print(record.movieid_id)
         movies.append(Movie.objects.get(movieid=record.movieid_id))
     # TODO     made change hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeee except seen
     return render(request, 'Seen.html', {'items': movies, 'number': len(movies)})
@@ -268,23 +267,23 @@ def expect(request, movie_id):
 
 
 def a_recommend(request, movie_id):
-    if debug: print("recommend function init")
+    print("recommend function init")
     username = request.user.get_username()
-    if debug: print("run recommend for this user: " + username)
+    print("run recommend for this user: " + username)
     recomm = core_running(username)
 
     if not recomm:
-        if debug: print("recommend" + " is ")
-        if debug: print(recomm)
-        if debug: print("user didn't pass pre alg test")
+        print("recommend" + " is ")
+        
+        print("user didn't pass pre alg test")
         return render(request, 'recommend.html', {'recommend_flag': False})
 
     movies = []
     a = Movie.objects.get(movieid=recomm[0])
-    if debug: print("recommend movie id is ")
-    if debug: print(a)
+    print("recommend movie id is ")
+    print(a)
     movies.append(a)
-    return render(request, 'recommend.html', {'items': movies, 'number': len(movies), 'recommend_flag': True})
+    return render(request, 'recommend.html', {'items': movies, 'number': len(movies) , 'recommend_flag': True})
 
 
 def load_data():
@@ -335,8 +334,8 @@ def pre_common_test(movieSet, tester):
             common.append(counter)
             counter = 0
 
-        if debug: print("common is")
-        if debug: print(common)
+        print("common is")
+        print(common)
 
         if max(common) < common_threshold:
             return False
@@ -365,8 +364,8 @@ def cal_matrix(common, movies, tester):
             matrix.append(rank)
         iCounter = iCounter + 1
 
-    if debug: print("matrix is ")
-    if debug: print(matrix)
+    print("matrix is ")
+    print(matrix)
     return matrix
 
 
@@ -400,8 +399,8 @@ def core_running(username):
     for record in records:
         tester.update({record.movieid_id: record.rate})
 
-    if debug: print("tester user data is ")
-    if debug: print(tester)
+    print("tester user data is " )
+    print(tester)
 
     com = pre_common_test(user_movie, tester)  # [1, 0, 0, 0, 0, 1, 0, 2, 1 ........]
 
@@ -413,8 +412,8 @@ def core_running(username):
     sorted(s)
     s.remove(-1)
     mini = min(s)  # mini is the most likely guy in userCF
-    if debug: print("mini is " + str(mini))
-    if debug: print(len(result) == len(com))  # com and result should be matched with each other
+    print("mini is " + str(mini))
+    print(len(result) == len(com))  # com and result should be matched with each other
 
     # findMaxCommon = []
     tempMax = -1
@@ -430,19 +429,19 @@ def core_running(username):
                 tempIndexMax = i
             # findMaxCommon.append(com[i])
 
-    if debug: print(
-        "the best index is at the postition : " + str(tempIndexMax) + " with common number of :" + str(tempMax))
+    print("the best index is at the postition : " + str(tempIndexMax) + " with common number of :" + str(tempMax))
 
     # remove_depu_list = dict(user_movie[str(tempIndexMax+1)])
 
-    remove_depu_list = {k: v for k, v in user_movie[str(tempIndexMax + 1)].items() if k not in tester}
+    remove_depu_list = {k: v for k, v in user_movie[str(tempIndexMax+1)].items() if k not in tester}
 
     aaa = {k: v for k, v in sorted(remove_depu_list.items(), key=lambda item: item[1])}
 
-    if debug: print("recommend list contains ")
-    if debug: print(aaa)
-    if debug: print("\n")
+    print("recommend list contains ")
+    print(aaa)
+    print("\n")
 
-    recommend_movie = aaa.popitem()
+    recommend_movie =aaa.popitem()
 
     return recommend_movie
+
