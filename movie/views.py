@@ -7,7 +7,7 @@ import json
 import math
 import codecs
 
-from movie.initializer import search_cache, search_index
+# from movie.initializer import search_cache, search_index
 
 self_threshold = 0
 common_threshold = 2

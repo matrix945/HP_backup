@@ -3,24 +3,24 @@ from django.views.decorators.csrf import csrf_protect
 from movie.models import *
 import operator
 import random
-from movie.initializer import search_index
+# from movie.initializer import search_index
 
 
 @csrf_protect
 def index(request):
     data = {}
-    movie_dict = search_index.data_in_memory['movie_dict']
+    # movie_dict = search_index.data_in_memory['movie_dict']
     if request.user.is_authenticated:
         data = {'username': request.user.get_username()}
     popular_movies = Popularity.objects.all().order_by('-weight')
     popular = []
-    for movie in popular_movies[:5]:
-        try:
-            popular.append({'movieid': movie.movieid_id, 'poster': movie_dict[movie.movieid_id].poster})
-        except:
-            continue
+    # for movie in popular_movies[:5]:
+    #     try:
+    #         popular.append({'movieid': movie.movieid_id, 'poster': movie_dict[movie.movieid_id].poster})
+    #     except:
+    #         continue
     data['popular'] = popular
-    popular_movie_list = [movie_dict[movie.movieid_id] for movie in popular_movies[:5]]
+    # popular_movie_list = [movie_dict[movie.movieid_id] for movie in popular_movies[:5]]
     # data['recommendation'] = get_recommendation(request, popular_movie_list)
     return render(request, 'base.html', data)
 
